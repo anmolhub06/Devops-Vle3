@@ -1,0 +1,30 @@
+name: CI Pipeline
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Code
+        uses: actions/checkout@v3
+
+      - name: Display Build Message
+        run: echo "Build Successful!"
+
+      - name: List Files
+        run: ls -la
+
+      - name: Send Slack Notification
+        if: always()
+        run: |
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"GitHub CI Pipeline Completed Successfully 🚀"}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
