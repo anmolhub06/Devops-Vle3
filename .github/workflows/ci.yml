@@ -23,7 +23,7 @@ jobs:
         run: ls -la
 
       - name: Send Slack Notification
-        if: always()
+        if: always() && secrets.SLACK_WEBHOOK_URL != ''
         run: |
           curl -X POST -H 'Content-type: application/json' \
           --data '{"text":"GitHub CI Pipeline Completed Successfully 🚀"}' \
