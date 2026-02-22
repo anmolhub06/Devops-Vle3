@@ -22,7 +22,9 @@ jobs:
       - name: List Files
         run: ls -la
 
-      - name: Deploy to Vercel
+      - name: Send Slack Notification
+        if: always()
         run: |
-          npm install -g vercel
-          vercel deploy --prod --token ${{ secrets.VERCEL_TOKEN }}
+          curl -X POST -H 'Content-type: application/json' \
+          --data '{"text":"GitHub CI Pipeline Completed Successfully 🚀"}' \
+          ${{ secrets.SLACK_WEBHOOK_URL }}
